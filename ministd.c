@@ -1,0 +1,170 @@
+#include "ministd.h"
+
+char tolower_cus(char c){
+    if(c>='A' && c <= 'Z') return c + ('a' - 'A');
+    return c;
+}
+
+int StringNCompareInsensitiveA(const char *s1, const char *s2, size_t n){
+    for (size_t i = 0; i < n; i++) {
+        if (tolower_cus(s1[i]) != tolower_cus(s2[i])) {
+            return (tolower_cus(s1[i]) < tolower_cus(s2[i])) ? -1 : 1;
+        }
+        else if (s1[i] == '\0') {
+            return 0;
+        }
+    }
+    return 0;
+}
+
+int StringNCompareA(const char *s1, const char *s2, size_t n){
+    for (size_t i = 0; i < n; i++) {
+        if (s1[i] != s2[i]) {
+            return (s1[i] < s2[i]) ? -1 : 1;
+        }
+        else if (s1[i] == '\0') {
+            return 0;
+        }
+    }
+    return 0;
+}
+
+int FindStringA(const char *str, const char *delimiter){
+    int stlen = StringLengthA(str);
+    int dlen  = StringLengthA(delimiter);
+    int found = 0;
+
+    if(stlen >= dlen){
+        for(int s=0, t=0; s<stlen; ++s){
+            do{
+                if(str[s] == delimiter[t]){
+                    if(++found == dlen) return ++found;
+                    ++s;
+                    ++t;
+                }
+            }while(found);
+        }
+        return -1;
+    }
+    return -1;
+}
+
+
+
+int StringCompareA(const char *String1,const char *String2 ){
+    for (;*String1 == *String2; String1++, String2++)
+    {
+        if (*String1 == '\0')
+            return 0;
+    }
+
+    return ((*(char *)String1 < *(char *)String2) ? -1 : +1);
+}
+
+int StringCompareInsensitiveA(const char *String1, const char *String2 ){
+    for (;tolower_cus(*String1) == tolower_cus(*String2); String1++, String2++)
+    {
+        if (*String1 == '\0')
+            return 0;
+    }
+
+    return (tolower_cus(*String1) < tolower_cus(*String2) ? -1 : 1);
+}
+
+char *StringCopyA( char *String1, char *String2 ){
+    char *p = String1;
+    while ((*p++ = *String2++) != 0);
+    return String1;
+}
+
+unsigned long StringLengthA(const char *String ){
+    char *String2;
+
+    if ( String == NULL)
+        return 0;
+
+    for (String2 = (char *)String; *String2; ++String2);
+
+    return (String2 - String);
+}
+
+unsigned long StringLengthW(wchar_t *String)
+{
+    wchar_t *String2;
+
+    for (String2 = String; *String2; ++String2);
+
+    return (String2 - String);
+}
+
+unsigned long WCharStringToCharString( char *Destination, wchar_t *Source, unsigned long MaximumAllowed ){
+    int Length = MaximumAllowed;
+
+    while (--Length >= 0)
+    {
+        if (!(*Destination++ = *Source++))
+            return MaximumAllowed - Length - 1;
+    }
+
+    return MaximumAllowed - Length;
+}
+
+unsigned long CharStringToWCharString(wchar_t *Destination, char *Source, unsigned long MaxAllowed){
+    int Length = MaxAllowed;
+
+    while (--Length >= 0)
+    {
+        if ( ! ( *Destination++ = *Source++ ) )
+            return MaxAllowed - Length - 1;
+    }
+
+    return MaxAllowed - Length;
+}
+
+void MemSet( void *Destination, int Val, unsigned long Size ){
+    int i = 0;
+    unsigned char *p = (unsigned char*)Destination;
+    while(Size>0){
+        *p= Val;
+        ++p;
+        --Size;
+    }
+}
+
+void *CopyMemory(void *Destination, const void *Source, unsigned long Size){
+    unsigned char *D = (unsigned char *)Destination;
+    unsigned char *S = (unsigned char *)Source;
+    while(Size--)
+        *D++ = *S++;
+
+    return Destination;
+}
+
+int MemCompare( void *s1, void *s2, int len ){
+    unsigned char * p = (unsigned char *)s1;
+    unsigned char * q = (unsigned char *)s2;
+    int charCompareStatus = 0;
+
+    if (s1 == s2)
+        return charCompareStatus;
+
+    while (len > 0)
+    {
+        if (*p != *q)
+        {
+            charCompareStatus = (*p >*q)?1:-1;
+            break;
+        }
+        len--;
+        p++;
+        q++;
+    }
+    return charCompareStatus;
+}
+
+
+bool isalfanum(const char C)
+{
+    bool res = (C >= 'a' && C <= 'z') || (C >= 'A' && C <= 'Z') || (C >= '0' && C <= '9');
+    return res;
+}
